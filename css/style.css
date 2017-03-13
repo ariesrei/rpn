@@ -1,0 +1,92 @@
+* {
+	padding: 0;
+	margin: 0;
+	outline: 0;
+}
+
+body {
+	font-family: Tahoma;
+	font-size: 10pt;
+	line-height: 22px;
+}
+
+.container {
+	width: 90%;
+	border: 1px #ddd solid;
+	margin: 50px auto;
+	height: auto;
+	min-height: 300px;
+}
+
+.content {
+	float: left;
+	width: 100%;
+	padding: 4px;
+}
+
+.left-col {
+	width: 20%;
+	float: left;
+	padding: 10px;
+	border: 1px #ddd solid;
+}
+.right-col {
+	width: 75%;
+	float: right;
+	padding: 10px;
+	border: 1px #ddd solid;
+}
+
+.content form {
+	display: table;
+	table-layout: fixed;
+}
+.content form div {
+	display: table-row;
+	table-layout: fixed;
+	width: 100%;
+	padding: 10px;
+
+}
+/*.content form div label,
+.content form div input,
+.content form div button {
+	display: table-cell;
+	line-height: 16px;
+}	*/
+
+button {
+	border: 1px #ddd solid;
+	border-radius: 10px;
+	padding: 5px 20px;
+}
+
+.entryList {
+	border: 1px #eee solid;
+	 
+}
+.entryList li {
+	list-style: none;
+	padding: 5px 10px;
+	border-bottom: 1px #eee solid;
+}
+.entryList li:last-child {
+	border-bottom: 0px #eee solid;
+}
+
+.exp {
+	border: 1px #bbb solid;
+	background-color: #eee;
+	padding: 5px;
+}
+.plus-btn {
+	background-color: #008cff;
+	color: white;
+	border: none;
+	border-radius: 0px;
+	font-size: 20px;
+	font-weight: bold;
+}
+input {
+	padding: 7px;
+}

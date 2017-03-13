@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+	<title>AngularJs Exercise 2</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css"/>
+	
+	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+	
+</head>
+
+<body>
+
+<div class="container">
+
+	<div class="content">
+
+		<div class="left-col" ng-controller="leftColController as leftColCtrl">
+
+			<ul class="entryList">
+				<li ng-repeat="entry in leftColCtrl.dataService.entry"> {{ entry.title }}</li>
+			</ul>
+
+			{{ leftColCtrl.dataService.entry }}	
+
+			<br/>
+			Output: {{ leftColCtrl.dataService.output }}	
+
+			<br/>
+			Stack: {{ leftColCtrl.dataService.stack }}	
+
+
+		</div>
+
+		<!-- ################################################# -->
+
+		<div class="right-col" ng-controller="rightColController as rightColCtrl">
+
+			<table>
+				<tr ng-repeat="titles in rightColCtrl.dataService.entry">
+					<td class="exp"> {{ titles.title}}</td>
+					<td>  = </td>
+					<td class="exp"> {{ titles.formula}}</td>
+				</tr>
+				
+				<form ng-submit="rightColCtrl.saveEntry()" > 
+				<tr>
+					<td><input id="title" placeholder="Enter Name" type="text" var-name-directive="" ng-model="rightColCtrl.title"/></td>
+					<td></td>
+					<td><textarea id="formula" placeholder="Enter value / formula" type="text" formula-directive="" ng-model="rightColCtrl.formula" rows="1"></textarea></td>
+				</tr>
+
+				<tr> <td colspan="3"><button class="plus-btn" type="submit">+</button></td> </tr>
+
+				</form>
+
+			</table>
+
+			{{ rightColCtrl.dataService.results }}
+		</div>
+
+	</div>
+
+</div>
+
+<!-- <div ng-controller="firstController as firstCtrl">
+
+<input type="text" ng-init="firstCtrl.rules='test'" ng-model="firstCtrl.rules"/>
+<button ng-click="firstCtrl.pushRules(firstCtrl.rules)">Push</button>
+
+ 
+ <br/>
+ 
+</div>
+ -->
+
+<script src="js/myApp.js"/></script>
+<script src="js/controller/controller.js"/></script>
+<script src="js/factory/factory.js"/></script>
+<script src="js/directive/directive.js"/></script>
+<script src="js/service/dataService.js"/></script>
+
+</body>
+
+</html>
