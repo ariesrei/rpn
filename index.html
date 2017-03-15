@@ -25,9 +25,12 @@
 
 			<br/>
 			Output: {{ leftColCtrl.dataService.output }}	
+			<br/>
+			Formula: {{ leftColCtrl.dataService.formula }}	
+
 
 			<br/>
-			Stack: {{ leftColCtrl.dataService.stack }}	
+			Result: {{ leftColCtrl.dataService.stack }}	
 
 
 		</div>
@@ -56,7 +59,14 @@
 
 			</table>
 
-			{{ rightColCtrl.dataService.results }}
+			<input type="text" ng-model="rightColCtrl.expression"/><br/>
+			<!-- 
+			<input type="text" ng-model="rightColCtrl.result"/><br/>
+ -->
+			<button ng-click="rightColCtrl.calculate(rightColCtrl.formula)">Calculate</button>
+
+			<!-- {{ rightColCtrl.result }} -->
+			<!-- {{ rightColCtrl.dataService.results }} -->
 		</div>
 
 	</div>

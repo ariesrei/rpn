@@ -25,7 +25,6 @@
 		var vm = this;
 
 		function saveEntry(){
-
 			if(vm.title !== '' && vm.formula !== ''){
 				dataService.saveEntry(vm.title, vm.formula);
 				vm.title = '';
@@ -34,19 +33,31 @@
 			else {
 				alert('Please fill the fields');
 			}
-			//stateChange.changeState(false);
-			 
-			
-			//dataService.saveEntry(title, formula);
 		}
 
-		vm.saveEntry = saveEntry;
+		function calculate(){
+			dataService.updateFormula(vm.formula);
+			dataService.compute();
+			//alert("adasdada");
+		}	
 
+
+
+
+		vm.saveEntry = saveEntry;
 		vm.title = '';
-		vm.formula = '';
+		vm.formula = ''
+
+		vm.expression = dataService.formula;
 		
 		// services
 		vm.dataService = dataService;
+
+		//vm.formula = dataService.formula;
+		
+		vm.result = dataService.compute;
+		vm.calculate = calculate;
+
 	}
 
 	function leftColController(dataService){

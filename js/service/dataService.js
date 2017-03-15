@@ -4,35 +4,122 @@
 
 	var entry = [];
 
-	var output = [];
+	//var output = [];
 
-	var stack = [];
+	//var stack = [];
 
 	function dataService(){
 	 	
 		var dataObj = {
 			saveEntry: saveEntry,
-			results: results,
+			//results: results,
 			entry: entry,
-			output: output,
-			stack: stack
+			output: [],
+			stack: [],
+			valid: true,
+			validOperators: ['*', 'x', '/', '-', '+'],
+			formula: '',
+			compute: compute,
+			updateFormula: updateFormula
 		}
 
 		function saveEntry(title, formula){
 
 			 
-			// entry.push({
-			// 	title: title.toUpperCase(), 
-			// 	formula: parseInt(formula)
-			// });
+			entry.push({
+				title: title.toUpperCase(), 
+				formula: formula
+			});
 			
 			//alert(JSON.stringify(entry));
 
 		}
 
-		function results(){
-			return eval( 2 + 2) ;
+		function updateFormula(string){
+
+			dataObj.formula = string;
+
+			alert(dataObj.formula);
 		}
+
+		// function results(){
+		// 	return eval( 2 + 2) ;
+		// }
+
+		function compute(){
+
+ 			this.stack = [];
+ 			//alert(this.stack);
+
+ 			//return stack;
+
+ 			for (var i = 0; i < this.formula.length; i++) {
+
+ 				//alert(this.formula.length);
+
+	        var char = this.formula.substring(i, i+1);
+	        
+	        alert(char);
+
+
+
+
+	        if (!isNaN(char) && char != " ") {
+				this.stack.push(+char);
+				alert("Next number. The stack is now: " + this.stack);
+	        } 
+
+	        else if (char === " ") {
+	          	continue;
+	        } 
+
+	        else {
+	          	var num1 = this.stack[this.stack.length - 2];
+	          	var num2 = this.stack[this.stack.length - 1];
+	          	var result = null;
+
+	          	this.stack.splice(this.stack.length - 1, 1);
+	          	this.stack.splice(this.stack.length - 1, 1);
+
+	          	switch(char) {
+		            case "+":
+		              	result = num1 + num2;
+		              	console.log("Adding " + num1 + "+" + num2);
+		              	break;
+
+		            case "-":
+		              	result = num1 - num2;
+		              	console.log("Subtracting " + num1 + "-" + num2);
+		              	break;
+
+		            case "x": case "*":
+		              	result = num1 * num2;
+		              	console.log("Multiplying " + num1 + "*" + num2);
+		              	break;
+
+		            case "/":
+		              	result = num1 / num2;
+		              	console.log("Dividing " + num1 + "/" + num2);
+		              	break;
+	          	}
+
+	          	this.stack.push(result);
+	          	console.log("Pushing the result of " + result + " on to the stack", this.stack);
+
+	        }
+	      }
+
+
+			if (this.stack.length != 1 || isNaN(this.stack[0])) {
+				this.stack = [];
+				this.stack.push("Invalid formula");
+				this.valid = false;
+			} 
+			else {
+				this.valid = true;
+			}
+		}
+
 
       	return dataObj;
 
