@@ -29,34 +29,37 @@
 				dataService.saveEntry(vm.title, vm.formula);
 				vm.title = '';
 				vm.formula = '';
+				//vm.str = '';
 			}
 			else {
 				alert('Please fill the fields');
 			}
 		}
 
+		//this will process dataService compute 
 		function calculate(){
 			dataService.updateFormula(vm.formula);
 			dataService.compute();
 			//alert("adasdada");
 		}	
 
-
-
-
-		vm.saveEntry = saveEntry;
 		vm.title = '';
-		vm.formula = ''
-
-		vm.expression = dataService.formula;
+		vm.formula = '';
+		//vm.str = '';
+		vm.test = dataService.test;
+		//vm.expression = dataService.formula;
 		
 		// services
 		vm.dataService = dataService;
 
-		//vm.formula = dataService.formula;
+		vm.formula = dataService.formula;
 		
-		vm.result = dataService.compute;
+		// functions
+		vm.saveEntry = saveEntry;
 		vm.calculate = calculate;
+
+
+		vm.result = dataService.compute;
 
 	}
 
