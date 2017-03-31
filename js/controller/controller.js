@@ -36,15 +36,31 @@
 			}
 		}
 
+		function clear(){
+			dataService.clear();
+		}
+
+		//this will process dataService compute 
+		function convert2rpn(){
+			dataService.convert2rpn(vm.infix);
+			vm.rpn = dataService.rpn;
+		}	
+
 		//this will process dataService compute 
 		function calculate(){
-			dataService.updateFormula(vm.formula);
+			dataService.updateFormula(vm.rpn);
 			dataService.compute();
-			//alert("adasdada");
 		}	
 
 		vm.title = '';
-		vm.formula = '';
+		vm.value = '';
+
+		vm.infix = '';
+
+		vm.formula = '';  // infix expression 5 + ((1 + 2) × 4) − 3
+
+		vm.rpn = dataService.rpn; //  reverse polisth notation 5 1 2 + 4 x + 3 -
+
 		//vm.str = '';
 		vm.test = dataService.test;
 		//vm.expression = dataService.formula;
@@ -54,8 +70,11 @@
 
 		vm.formula = dataService.formula;
 		
+		
 		// functions
 		vm.saveEntry = saveEntry;
+		vm.clear = clear;
+		vm.convert2rpn = convert2rpn;
 		vm.calculate = calculate;
 
 
