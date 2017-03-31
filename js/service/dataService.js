@@ -7,18 +7,16 @@
 	function dataService(){
 	 	
 		var dataObj = {
-			temp: [],    // stack all operators in order.
-			test_stack: [],
-			
-			parenthesis: [],
-			temp_par: [],
-			saveEntry: saveEntry, // function save entry
-			entry: entry,
-			output: [],
 			valid: true,
 			validOperators: ['*', 'x', '/', '-', '+'], // valid operators
-			stack: [], // stack
-			//result: [], // result
+			// temporary
+			temp: [],    // stack all operators in order.
+			test_stack: [],
+			parenthesis: [],
+			temp_par: [],
+		
+			result: '',
+			stack: [], // result
 			infix: [], // infix expression
 			postfix: [], // postfix expression
 
@@ -26,6 +24,8 @@
 			rpn: [], // reverse polish notation
 
 			// functions here
+			saveEntry: saveEntry, // function save entry
+			entry: entry,
 			clear: clear,
 			convert2rpn: convert2rpn, // fn convert infix to rpn
 			compute: compute, // function compute
@@ -65,12 +65,11 @@
 				var test_par_len = this.parenthesis.length - 1;  // get the last index of parenthesis[]
 
 
-				// 2 * ( 3 + 4 ) - 6
-				// 2 3 4 + -6 *
-				// 2 3 4 +
-				// *
-				// (   temp par
-				// +   parenthesis
+
+				// 12 + 3 * 6 + 2
+				// 12 3 6 * + 2 + 
+				// 12 3 6 *
+				// + *
 
 				//  OPERATORS STACKING. ex. *,+,-,/,(,)
 
@@ -88,11 +87,6 @@
 		      		}
 
 		      		else {	 
-
-						// this.test_postfix.push(this.test_stack[0]);
-		    			//  this.test_stack.splice(0,1);
-		    			//  this.test_stack.push(infix_split[i]);	
-		    			//this.test_stack[test_stack_len];
 
 		    			if ( par_look.has('(') ) {
 
@@ -123,17 +117,17 @@
 		      				if ( mySet.has('*') ) {
 		      					if(infix_split[i] == '*') {
 		      						this.postfix.push('*');
-		      						this.test_stack.splice(0,1);
+		      						this.test_stack.splice(0,i);
 		      						this.test_stack.push('*');
 		      					}
 		      					else if(infix_split[i] == '/') {
 		      						this.postfix.push('*');
-		      						this.test_stack.splice(0,1);
+		      						this.test_stack.splice(0,i);
 		      						this.test_stack.push('/'); 
 		      					}
 		      					else if(infix_split[i] == '+') {
 		      						this.postfix.push('*');
-		      						this.test_stack.splice(0,1);
+		      						this.test_stack.splice(0,i);
 		      						this.test_stack.push('+');
 		      					}
 		      					else if(infix_split[i] == '-') {
@@ -149,17 +143,17 @@
 			      			if ( mySet.has('/') ) {
 			      				if(infix_split[i] == '*') {
 		      						this.postfix.push('*');
-		      						this.test_stack.splice(0,1);
+		      						this.test_stack.splice(0, i);
 		      						this.test_stack.push('*');
 		      					}
 		      					else if(infix_split[i] == '+') {
 		      						this.postfix.push('/');
-		      						this.test_stack.splice(0,1);
+		      						this.test_stack.splice(0, i);
 		      						this.test_stack.push('+');
 		      					}	
 		      					else if(infix_split[i] == '-') {
 		      						this.postfix.push('/');
-		      						this.test_stack.splice(0,1);
+		      						this.test_stack.splice(0,i);
 		      						this.test_stack.push('-');
 		      					}
 		      					else if(infix_split[i] == '(') {
@@ -176,8 +170,8 @@
 		      					}
 		      					else if(infix_split[i] == '+') {
 		      						this.postfix.push('+');
-	      							this.test_stack.splice(0,1);
-		      						this.test_stack.push('+');
+	      							//this.test_stack.splice(0,1);
+		      						//this.test_stack.push('+');
 		      					}
 		      					else if(infix_split[i] == '-') {
 		      						this.postfix.push('+');
@@ -224,12 +218,9 @@
 
 			}
 
-			//this.postfix.push(this.parenthesis);
-			
 			for (var x = test_stack_len; x >= 0; x--){
 				this.postfix.push(this.test_stack[x]);
 			}
-			
 
 			var passme = this.postfix.toString();
 			passme = passme.split(',').join(' ');
@@ -246,9 +237,6 @@
 		function compute(){
 
 			this.stack = [];
- 
-			//this.result = [];
-			
 			var formula_split = this.rpn.split(" ");
 			var count = formula_split.length; // 100 50 + // count is : 3
 
@@ -256,12 +244,8 @@
 
  			for (var i = 0; i < count; i++) {
 
- 				
-		        //var char =  this.formula.substring(i, i+1);
 				var char =  this.rpn[i];
 
-		        //alert(char);
-		   		
 		        if (!isNaN(char) && char != " ") {
 					this.stack.push(+char);
 					alert("Next number. The stack is now: " + this.stack);
@@ -307,16 +291,6 @@
 		        }
       		}
 
-
-			// if (this.stack.length != 1 || isNaN(this.stack[0])) {
-			// 	this.stack = [];
-			// 	this.stack.push("Invalid formula");
-			// 	this.valid = false;
-			// } 
-			// else {
-			// 	this.valid = true;
-			// }
-
 			if (this.stack.length != 1 || isNaN(this.stack[0])) {
 				this.stack = [];
 				this.stack.push("Invalid formula");
@@ -326,11 +300,11 @@
 				this.valid = true;
 			}
 
+			this.result = String(this.stack);
+
 		}
 
-
       	return dataObj;
-
 	}
 	 
 	module.service("dataService", dataService);

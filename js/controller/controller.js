@@ -2,24 +2,6 @@
 
 (function(module){
 
-
-	// function controllerOne(saveCalculationRules){
-
-	// 	var vm = this;
-
-	// 	function pushRules(rules){
-	// 		saveCalculationRules(rules);
-	// 	}
-
-	// 	vm.name = 'Aries Meralles';
-	// 	vm.rules = '';
-	// 	// factories
-	// 	vm.saveCalculationRules = saveCalculationRules;
-
-	// 	vm.pushRules = pushRules;
-
-	// }
-
 	function rightColController(dataService){
 
 		var vm = this;
@@ -29,7 +11,6 @@
 				dataService.saveEntry(vm.title, vm.formula);
 				vm.title = '';
 				vm.formula = '';
-				//vm.str = '';
 			}
 			else {
 				alert('Please fill the fields');
@@ -44,6 +25,7 @@
 		function convert2rpn(){
 			dataService.convert2rpn(vm.infix);
 			vm.rpn = dataService.rpn;
+			dataService.compute();
 		}	
 
 		//this will process dataService compute 
@@ -68,11 +50,12 @@
 		// services
 		vm.dataService = dataService;
 
-		vm.formula = dataService.formula;
+		//vm.formula = dataService.formula;
 		
 		
 		// functions
 		vm.saveEntry = saveEntry;
+		
 		vm.clear = clear;
 		vm.convert2rpn = convert2rpn;
 		vm.calculate = calculate;

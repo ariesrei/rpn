@@ -111,52 +111,70 @@
  			<td>Postfix expression:</td>
  			<td><input type="text" ng-model="rightColCtrl.rpn"/></td>
  			</tr>
+
+ 			<tr>
+ 			<td> </td>
+ 			<td><button ng-click="rightColCtrl.convert2rpn(rightColCtrl.infix)">Compute</button></td>
+ 			</tr>
+
+ 			<tr>
+ 			<td> </td>
+ 			<td>Result : {{ rightColCtrl.dataService.result }}	</td>
+ 			</tr> 
  			</table>
 			 
  
-		 	<table class="sample-table" style="float: right; width: 45%; text-align: left;">
+		 	
+
+			<!-- 
+			<input type="text" ng-model="rightColCtrl.result"/><br/>
+			-->
+
+ 			
+			<!-- <button ng-click="rightColCtrl.calculate(rightColCtrl.rpn)">Calculate</button>
+
+			<button ng-click="rightColCtrl.clear()">Clear</button>
+ -->
+			 
+			<!-- {{ rightColCtrl.result }} -->
+			<!-- {{ rightColCtrl.dataService.results }} -->
+
+
+			<table class="sample-table" style="float: right; width: 45%; text-align: left;">
 		 		<thead>
 		 		<tr>
 		 		<th> Infix Expression </th>
 		 		<th> Postfix Expression </th>
+		 		<th> Result </th>
 		 		</tr>
 
 		 		</thead>
 	 			<tr>
 		 			<td> 4 * 3 + 2 / 1</td>
 		 			<td> 4 3 * 2 1 / + </td>
+		 			<td> 14 </td>
 	 			</tr>
 
 	 			<tr>
 		 			<td> 4 + 18 / ( 9 - 3 )</td>
 		 			<td>4 18 9 3 - / +</td>
+		 			<td> 7</td>
 	 			</tr>
 
 	 			<tr>
 		 			<td> 4 * 3 + 2 - 1</td>
 		 			<td> 4 3 * 2 + 1 -</td>
+		 			<td> 13 </td>
 	 			</tr>
 
 	 			<tr>
 		 			<td> 2 * ( 3 + 4 ) - 6</td>
 		 			<td> 2 3 4 + -6 *</td>
+		 			<td> -30 </td>
 	 			</tr>
 
  			</table>
 
-			<!-- 
-			<input type="text" ng-model="rightColCtrl.result"/><br/>
- -->
-
- 			<button ng-click="rightColCtrl.convert2rpn(rightColCtrl.infix)">Convert to rpn</button>
-
-			<button ng-click="rightColCtrl.calculate(rightColCtrl.rpn)">Calculate</button>
-
-			<button ng-click="rightColCtrl.clear()">Clear</button>
-
-
-			<!-- {{ rightColCtrl.result }} -->
-			<!-- {{ rightColCtrl.dataService.results }} -->
 		</div>
 
 	</div>
