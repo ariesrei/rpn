@@ -46,10 +46,21 @@
 			Infix Expression: {{ leftColCtrl.dataService.infix }}
 			<br/>
 
-			Postfix: {{ leftColCtrl.dataService.postfix }}	
+			Output: {{ leftColCtrl.dataService.output }}	
 			<br/>
 
- 			<br/>
+			Operator Stack: {{ leftColCtrl.dataService.operator_stack }}	
+			<br/>
+
+			Temp: {{ leftColCtrl.dataService.temp }}	
+			<br/>
+
+			Parenthesis Output: {{ leftColCtrl.dataService.parenthesis_output }}	
+			<br/>
+
+			Parenthesis Stack: {{ leftColCtrl.dataService.parenthesis_stack }}	
+			<br/>
+ 			<!-- <br/>
 			Reverse polish notation: {{ leftColCtrl.dataService.rpn }}	
 
 			<br/>
@@ -69,7 +80,7 @@
 			<br/>
 
 			Temp Par {{ leftColCtrl.dataService.temp_par }}
-			<br/>
+			<br/> -->
 
 		</div>
 
@@ -104,14 +115,14 @@
  			<table style="float: left; width: 45%;">
  			<tr>
  			<td> Infix expression:</td>
- 			<td> <input type="text" ng-model="rightColCtrl.infix" placeholder="enter infix expression"/></td>
+ 			<td> <input type="text" ng-model="rightColCtrl.infix" placeholder="enter infix expression"/> <input type="text" ng-model="rightColCtrl.rpn" disabled="" style="background-color: #fff; border: none;" /></td>
  			</tr>
 
- 			<tr>
+ 		<!-- 	<tr>
  			<td>Postfix expression:</td>
  			<td><input type="text" ng-model="rightColCtrl.rpn"/></td>
  			</tr>
-
+ -->
  			<tr>
  			<td> </td>
  			<td><button ng-click="rightColCtrl.convert2rpn(rightColCtrl.infix)">Compute</button></td>
@@ -119,7 +130,7 @@
 
  			<tr>
  			<td> </td>
- 			<td>Result : {{ rightColCtrl.dataService.result }}	</td>
+ 			<td style="font-size: 20px; background-color: #f3b600; color:#fff; padding: 10px;">Result : {{ rightColCtrl.dataService.result }}	</td>
  			</tr> 
  			</table>
 			 
@@ -149,6 +160,13 @@
 		 		</tr>
 
 		 		</thead>
+
+		 		<tr>
+		 			<td> 3 + 4 * 2 / ( 1 - 5 )</td>
+		 			<td> 3 4 2 * 1 5 - / + </td>
+		 			<td> 1   </td>
+	 			</tr>
+
 	 			<tr>
 		 			<td> 4 * 3 + 2 / 1</td>
 		 			<td> 4 3 * 2 1 / + </td>
@@ -169,8 +187,8 @@
 
 	 			<tr>
 		 			<td> 2 * ( 3 + 4 ) - 6</td>
-		 			<td> 2 3 4 + -6 *</td>
-		 			<td> -30 </td>
+		 			<td> 2 3 4 + * 6 -</td>
+		 			<td> 8  </td>
 	 			</tr>
 
  			</table>

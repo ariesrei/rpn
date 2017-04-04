@@ -23,9 +23,11 @@
 
 		//this will process dataService compute 
 		function convert2rpn(){
-			dataService.convert2rpn(vm.infix);
+			//dataService.convert2rpn(vm.infix);
+			dataService.calculate(vm.infix);
 			vm.rpn = dataService.rpn;
 			dataService.compute();
+
 		}	
 
 		//this will process dataService compute 
@@ -37,8 +39,8 @@
 		vm.title = '';
 		vm.value = '';
 
-		vm.infix = '';
 
+		vm.infix = '';
 		vm.formula = '';  // infix expression 5 + ((1 + 2) × 4) − 3
 
 		vm.rpn = dataService.rpn; //  reverse polisth notation 5 1 2 + 4 x + 3 -

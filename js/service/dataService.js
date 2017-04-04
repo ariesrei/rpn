@@ -7,27 +7,21 @@
 	function dataService(){
 	 	
 		var dataObj = {
+			stack: [], // stack for compute function
 			valid: true,
 			validOperators: ['*', 'x', '/', '-', '+'], // valid operators
-			// temporary
-			temp: [],    // stack all operators in order.
-			test_stack: [],
-			parenthesis: [],
-			temp_par: [],
-		
-			result: '',
-			stack: [], // result
+			parenthesis_output: [],
+			parenthesis_stack: [],
+			output: [],
+			operator_stack: [],
 			infix: [], // infix expression
-			postfix: [], // postfix expression
-
-			formula: [], // the iniix expression
 			rpn: [], // reverse polish notation
-
-			// functions here
 			saveEntry: saveEntry, // function save entry
-			entry: entry,
 			clear: clear,
-			convert2rpn: convert2rpn, // fn convert infix to rpn
+			checkPrecedence: checkPrecedence,
+			precedence_3: precedence_3,
+			precedence_2: precedence_2,
+			calculate: calculate,
 			compute: compute, // function compute
 			updateFormula: updateFormula // function updateFormula
 		}
@@ -40,196 +34,299 @@
 			//alert(JSON.stringify(entry));
 		}
 
+		// Clear All Data Object
 		function clear() {
 			this.infix = [];
-			this.postfix = [];
+			this.output = [];
 			this.stack = [];
 			this.rpn = [];
-			this.temp_par = [];
-			this.par = [];
-			this.test_stack = [];
-			this.temp = [];
+
+			this.parenthesis_stack = [];
+			this.parenthesis_output = [];
+			this.operator_stack = [];
 		}
 
+//---------------------------------------------------
+//  OPERATOR         PRECEDENCE        ASSOCIATIVITY
+//     ^                  4               Right
+//	   *                  3               Left
+//     /                  3               Left
+//     +                  2               Left
+//	   -                  2               Left
+//----------------------------------------------------
 
-		function convert2rpn(string){
-			//alert("found me!");
+		function calculate(str) {
 
-			this.infix = string;
-			var infix_split = this.infix.split(" ");
-			var count = infix_split.length;
+			this.infix = str;  // infix expression formula  4 * 3 + 2 / 1 
+
+			var infix_split = this.infix.split(" ");         // 4,*,3,+,2,/,1
+			var count = infix_split.length;                  // 7
 
 			for(var i = 0; i < count; i++) {
 
-				var test_stack_len = this.test_stack.length - 1;  // get the last index of test_stack[]
-				var test_par_len = this.parenthesis.length - 1;  // get the last index of parenthesis[]
+				if( infix_split[i] == '/' || infix_split[i] == '*' || infix_split[i] == '+' || infix_split[i] == '-' || infix_split[i] == '(' || infix_split[i] == ')'){
+					this.checkPrecedence(infix_split[i]);
+				}
+				else {
+					this.output.push(infix_split[i]); // push numbers and name to postfix ["4", "3"]
+				}
+			}
 
+			this.output.push( this.operator_stack);
+			var to_string = this.output.toString();
 
+			to_string = to_string.replace(/,/g, " ");
+			dataObj.rpn = to_string;
+		}
 
-				// 12 + 3 * 6 + 2
-				// 12 3 6 * + 2 + 
-				// 12 3 6 *
-				// + *
+		function precedence_3(str = String, bool = Boolean) {
 
-				//  OPERATORS STACKING. ex. *,+,-,/,(,)
+			if (bool) {
+				var myOperatorStack = new Set(this.operator_stack);
 
-		      	if( infix_split[i] == '/' || infix_split[i] == '*' || infix_split[i] == '+' || infix_split[i] == '-' || infix_split[i] == '(' || infix_split[i] == ')'){
+				this.operator_stack.push(str);
+				alert(this.operator_stack);
 
-		      		this.temp.push(infix_split[i]); // stack all operators in temp[]
+				if ( myOperatorStack.has('*') ) {
+					this.output.push('*');
+					var idx = this.operator_stack.indexOf("*");
+	  				this.operator_stack[idx] = "*";
+	  				this.operator_stack.splice(idx, 1);
+	  				alert(this.operator_stack);
+	  			}
 
-		      		//this.test_stack.push(infix_split[i]);
+	  			if ( myOperatorStack.has('/') ) {
+	  				this.output.push('/');
+					var idx = this.operator_stack.indexOf("/");
+	  				this.operator_stack[idx] = "*";
+	  				this.operator_stack.splice(idx, 1);
+	  				alert(this.operator_stack);
+	  			}
 
-					var mySet = new Set(this.test_stack);
-					var par_look = new Set(this.temp_par);
+	  			if ( myOperatorStack.has('+') ) {
+	  				var idx = this.operator_stack.indexOf("+");
+	  				this.operator_stack[idx] = "*";
+	  				this.operator_stack.splice(idx, 1);
+	  				this.operator_stack.push('+');
+	  				alert(this.operator_stack);
+	  			}
 
-		      		if (this.test_stack == '') {
-						this.test_stack.push(infix_split[i]);
-		      		}
-
-		      		else {	 
-
-		    			if ( par_look.has('(') ) {
-
-		    					// all stact entry should be inserted to parenthesis[]
-
-		      					if(infix_split[i] == '*') {
-		      						this.parenthesis.push('*');
-		      					}
-		      					else if(infix_split[i] == '/') {
-		     						 this.parenthesis.push('/');
-		      					}
-		      					else if(infix_split[i] == '+') {
-		      						this.parenthesis.push('+');
-		      					}
-		      					else if(infix_split[i] == '-') {
-		      						this.parenthesis.push('-');
-		      					}
-		      					else if(infix_split[i] == ')') {
-		      						this.postfix.push(this.parenthesis);
-			
-		      						this.temp_par = '';
-		      					}
-		      			}
-
-		      			else {
-		      				// normal stacking of operators
-
-		      				if ( mySet.has('*') ) {
-		      					if(infix_split[i] == '*') {
-		      						this.postfix.push('*');
-		      						this.test_stack.splice(0,i);
-		      						this.test_stack.push('*');
-		      					}
-		      					else if(infix_split[i] == '/') {
-		      						this.postfix.push('*');
-		      						this.test_stack.splice(0,i);
-		      						this.test_stack.push('/'); 
-		      					}
-		      					else if(infix_split[i] == '+') {
-		      						this.postfix.push('*');
-		      						this.test_stack.splice(0,i);
-		      						this.test_stack.push('+');
-		      					}
-		      					else if(infix_split[i] == '-') {
-		      						this.postfix.push('-');
-		      						//this.test_stack.splice(0,1);
-		      						//this.test_stack.push('-');
-		      					}
-		      					else if(infix_split[i] == '(') {
-		      						this.temp_par.push('(');
-		      					}
-			      			}
-
-			      			if ( mySet.has('/') ) {
-			      				if(infix_split[i] == '*') {
-		      						this.postfix.push('*');
-		      						this.test_stack.splice(0, i);
-		      						this.test_stack.push('*');
-		      					}
-		      					else if(infix_split[i] == '+') {
-		      						this.postfix.push('/');
-		      						this.test_stack.splice(0, i);
-		      						this.test_stack.push('+');
-		      					}	
-		      					else if(infix_split[i] == '-') {
-		      						this.postfix.push('/');
-		      						this.test_stack.splice(0,i);
-		      						this.test_stack.push('-');
-		      					}
-		      					else if(infix_split[i] == '(') {
-		      						this.temp_par.push('(');
-		      					}
-			      			}
-
-			      			if ( mySet.has('+') ) {
-		      					if(infix_split[i] == '*') {
-		      						this.test_stack.push('*');
-		      					}
-		      					else if(infix_split[i] == '/') {
-		      						this.test_stack.push('/');
-		      					}
-		      					else if(infix_split[i] == '+') {
-		      						this.postfix.push('+');
-	      							//this.test_stack.splice(0,1);
-		      						//this.test_stack.push('+');
-		      					}
-		      					else if(infix_split[i] == '-') {
-		      						this.postfix.push('+');
-		      						this.test_stack.splice(0,1);
-		      						this.test_stack.push('-');
-		      					}
-		      					else if(infix_split[i] == '(') {
-		      						this.temp_par.push('(');
-		      					}
-			      			}
-
-			      			if ( mySet.has('-') ) {
-		      				  	if(infix_split[i] == '*') {
-		      						this.test_stack.push('*');
-		      					}
-		      					else if(infix_split[i] == '/') {
-		      						this.test_stack.push('/');
-		      					}	
-		      					else if(infix_split[i] == '+') {
-		      						this.postfix.push('-');
-	      							this.test_stack.splice(0,1);
-		      						this.test_stack.push('+');
-		      					}
-		      					else if(infix_split[i] == '-') {
-		      						this.postfix.push('-');
-	      							this.test_stack.splice(0,1);
-		      						this.test_stack.push('-');
-		      					}
-		      					else if(infix_split[i] == '(') {
-		      						this.temp_par.push('(');
-		      					}
-			      			}
-
-		      			}
-	
-		      		}
-
-		        }
-
-		        // NON OPERATORS STACKING. ex. numbers = 5, 4, 3, 2, 1
-		        else {
-		        	this.postfix.push(infix_split[i]);
-		        }
+	  			if ( myOperatorStack.has('-') ) {
+					var idx = this.operator_stack.indexOf("-");
+	  				this.operator_stack[idx] = "*";
+	  				this.operator_stack.splice(idx, 1);
+	  				this.operator_stack.push('-');
+	  				alert(this.operator_stack);
+	  			}
 
 			}
 
-			for (var x = test_stack_len; x >= 0; x--){
-				this.postfix.push(this.test_stack[x]);
+			else {
+				var myParenthesisStack = new Set(this.parenthesis_stack);
+				
+				this.parenthesis_stack.push(str);
+				alert(this.parenthesis_stack);
+
+				if ( myParenthesisStack.has('*') ) {
+					this.parenthesis_output.push('*');
+					var idx = this.parenthesis_stack.indexOf("*");
+	  				this.parenthesis_stack[idx] = "*";
+	  				this.parenthesis_stack.splice(idx, 1);
+	  				alert(this.parenthesis_stack);
+	  			}
+
+	  			if ( myParenthesisStack.has('/') ) {
+	  				this.parenthesis_output.push('/');
+					var idx = this.parenthesis_stack.indexOf("/");
+	  				this.parenthesis_stack[idx] = "*";
+	  				this.parenthesis_stack.splice(idx, 1);
+	  				alert(this.parenthesis_stack);
+	  			}
+
+	  			if ( myParenthesisStack.has('+') ) {
+	  				var idx = this.parenthesis_stack.indexOf("+");
+	  				this.parenthesis_stack[idx] = "*";
+	  				this.parenthesis_stack.splice(idx, 1);
+	  				this.parenthesis_stack.push('+');
+	  				alert(this.parenthesis_stack);
+	  			}
+
+	  			if ( myParenthesisStack.has('-') ) {
+					var idx = this.operator_stack.indexOf("-");
+	  				this.parenthesis_stack[idx] = "*";
+	  				this.parenthesis_stack.splice(idx, 1);
+	  				this.parenthesis_stack.push('-');
+	  				alert(this.parenthesis_stack);
+	  			}
+
 			}
 
-			var passme = this.postfix.toString();
-			passme = passme.split(',').join(' ');
-			dataObj.rpn = passme;
+  			return true;
+
+		}
+
+		function precedence_2(str = String, bool = Boolean) {
+
+			if (bool) {
+				var myOperatorStack = new Set(this.operator_stack);
+
+				this.operator_stack.push(str);
+				alert(this.operator_stack);
+
+		    	if ( myOperatorStack.has('*') ) {
+					this.output.push('*');
+					var idx = this.operator_stack.indexOf("*");
+	  				this.operator_stack.splice(idx, 1);
+	  				alert(this.operator_stack);
+	  			}
+
+	  			if ( myOperatorStack.has('/') ) {
+	  				this.output.push('/');
+					var idx = this.operator_stack.indexOf("/");
+	  				this.operator_stack.splice(idx, 1);
+	  				alert(this.operator_stack);
+	  			}
+
+	  			if ( myOperatorStack.has('+') ) {
+	  				this.output.push('+');
+	  				var idx = this.operator_stack.indexOf("+");
+	  				this.operator_stack.splice(idx, 1);
+	  				alert(this.operator_stack);
+	  			}
+
+	  			if ( myOperatorStack.has('-') ) {
+	  				this.output.push('-');
+					var idx = this.operator_stack.indexOf("-");
+	  				this.operator_stack.splice(idx, 1);
+	  				alert(this.operator_stack);
+	  			}
+
+			}
+
+			else {
+				var myParenthesisStack = new Set(this.parenthesis_stack);
+				
+				this.parenthesis_stack.push(str);
+				alert(this.parenthesis_stack);
+
+		    	if ( myParenthesisStack.has('*') ) {
+					this.parenthesis_output.push('*');
+					var idx = this.parenthesis_stack.indexOf("*");
+	  				this.parenthesis_stack.splice(idx, 1);
+	  				alert(this.parenthesis_stack);
+	  			}
+
+	  			if ( myParenthesisStack.has('/') ) {
+	  				this.parenthesis_output.push('/');
+					var idx = this.parenthesis_stack.indexOf("/");
+	  				this.parenthesis_stack.splice(idx, 1);
+	  				alert(this.parenthesis_stack);
+	  			}
+
+	  			if ( myParenthesisStack.has('+') ) {
+	  				this.parenthesis_output.push('+');
+	  				var idx = this.parenthesis_stack.indexOf("+");
+	  				this.parenthesis_stack.splice(idx, 1);
+	  				alert(this.parenthesis_stack);
+	  			}
+
+	  			if ( myParenthesisStack.has('-') ) {
+	  				this.parenthesis_output.push('-');
+					var idx = this.parenthesis_stack.indexOf("-");
+	  				this.parenthesis_stack.splice(idx, 1);
+	  				alert(this.parenthesis_stack);
+	  			}
+
+			}
+
+  			return true;
+
+		}
+
+		function checkPrecedence(str){
+
+			var myParenthesisStack = new Set(this.parenthesis_stack);
+
+			if ( myParenthesisStack.has('(') ) {
+
+				alert("Found parenthesis!");
+
+				switch(str){
+				    case "*":
+				    	this.precedence_3('*', false );
+				        break;
+
+				    case "/":
+				    	this.precedence_3('/', false );
+				        break;
+
+				    case "+":
+				    	this.precedence_2('+', false );
+				        break;
+
+			        case "-":
+			        	this.precedence_2('-', false );
+				        break;
+
+				    case "(":
+			        	//alert("found (");
+			        	this.parenthesis_stack.push(str);
+			        	alert(this.parenthesis_stack);
+				        break;
+
+			        case ")": // CLOSING
+			        	//alert("found (");
+		        		var idx = this.parenthesis_stack.indexOf("(");
+						this.parenthesis_stack.splice(idx, 1);
+			        	this.output.push(this.parenthesis_stack)
+			        	//this.parenthesis_stack.push(str);
+			        	alert("Parenthesis Stack :" + this.parenthesis_stack);
+				        break;
+
+				    default:
+				}
+			}
+
+			else {
+				switch(str){
+				    case "*":
+				    	this.precedence_3( '*', true );
+				        break;
+
+				    case "/":
+				    	this.precedence_3('/', true);
+				        break;
+
+				    case "+":
+				    	this.precedence_2('+', true );
+				        break;
+
+			        case "-":
+			        	this.precedence_2('-', true );
+				        break;
+
+				    case "(":
+			        	//alert("found (");
+			        	this.parenthesis_stack.push(str);
+			        	alert(this.parenthesis_stack);
+				        break;
+
+			     	case ")": // CLOSING
+			        	//alert("found (");
+		        		var idx = this.parenthesis_stack.indexOf("(");
+						this.parenthesis_stack.splice(idx, 1);
+			        	this.output.push(this.parenthesis_stack)
+			        	//this.parenthesis_stack.push(str);
+			        	alert("Parenthesis Stack :" + this.parenthesis_stack);
+				        break;
+
+				    default:
+				}
+			}
 
 		}
 
 		function updateFormula(string){
-			//dataObj.formula = string;
 			dataObj.rpn = string;
 		}	
 
@@ -302,6 +399,7 @@
 
 			this.result = String(this.stack);
 
+			this.clear();
 		}
 
       	return dataObj;
