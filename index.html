@@ -9,14 +9,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 	
 	<style>
-	table.sample-table {
-		border-collapse: collapse;
-	}
-	table.sample-table td,
-	table.sample-table th{
-		border: 1px #ddd solid;
-		padding: 5px;
-	}
+
+
 	</style>
 </head>
 
@@ -27,171 +21,64 @@
 	<div class="content">
 
 		<div class="left-col" ng-controller="leftColController as leftColCtrl">
-
-			<ul class="entryList">
-				<li ng-repeat="entry in leftColCtrl.dataService.entry"> {{ entry.title }}</li>
-			</ul>
-
-			<!-- {{ leftColCtrl.dataService.entry }} -->
-		<!-- 	<br/>
-			Output: {{ leftColCtrl.dataService.output }}	
-
+ 			Entries: {{ leftColCtrl.dataService.entry }}	
 			<br/>
-			Infix expression: {{ leftColCtrl.dataService.formula }}	
- 		
- 			<br/>
-			Tokenize: {{ leftColCtrl.dataService.tokenize }}	
- -->
- 			<br/>
 			Infix Expression: {{ leftColCtrl.dataService.infix }}
 			<br/>
-
 			Output: {{ leftColCtrl.dataService.output }}	
 			<br/>
-
 			Operator Stack: {{ leftColCtrl.dataService.operator_stack }}	
 			<br/>
-
-			Temp: {{ leftColCtrl.dataService.temp }}	
-			<br/>
-
 			Parenthesis Output: {{ leftColCtrl.dataService.parenthesis_output }}	
 			<br/>
-
 			Parenthesis Stack: {{ leftColCtrl.dataService.parenthesis_stack }}	
 			<br/>
- 			<!-- <br/>
-			Reverse polish notation: {{ leftColCtrl.dataService.rpn }}	
-
-			<br/>
-			Result: {{ leftColCtrl.dataService.stack }}	
-			<br/>
-
-
-			
-
-			Test Stack: {{ leftColCtrl.dataService.test_stack }}	
-			<br/>
-
-			Temp: {{ leftColCtrl.dataService.temp }}	
-			<br/>
-
-			Parenthesis {{ leftColCtrl.dataService.parenthesis }}
-			<br/>
-
-			Temp Par {{ leftColCtrl.dataService.temp_par }}
-			<br/> -->
-
 		</div>
 
 		<!-- ################################################# -->
 
 		<div class="right-col" ng-controller="rightColController as rightColCtrl">
 
+			
+			<div class="box-2 fl">
 
-		
+				<rpn-add-entry></rpn-add-entry>
 
-<!-- 			<table>
-				<tr ng-repeat="titles in rightColCtrl.dataService.entry">
-					<td class="exp"> {{ titles.title}}</td>
-					<td>  = </td>
-					<td class="exp"> {{ titles.formula}}</td>
-				</tr>
-				
-				<form ng-submit="rightColCtrl.saveEntry()" > 
-				<tr>
-					<td><input id="title" placeholder="Enter Name" type="text" var-name-directive="" ng-model="rightColCtrl.title"/></td>
-					<td></td>
-					<td><textarea id="value" placeholder="Enter value" type="text" formula-directive="" ng-model="rightColCtrl.value" rows="1"></textarea></td>
-				</tr>
-				<input type="text" ng-model="" />
-				<tr><td colspan="3"><button class="plus-btn" type="submit">+</button></td> </tr>
+	 			<table>
 
-				</form>
+					<tr ng-repeat="entry in rightColCtrl.dataService.entry" class="entry-row">
+						<td> {{ entry.name }}</td>
+						<td> {{ entry.value }}</td>
+					</tr>
 
-			</table>
- -->
+		 			<tr>
+			 			<td> Formula : </td>
+			 			<td> 
+			 				<input type="text" ng-model="rightColCtrl.infix" placeholder="enter infix expression"/> 
+			 				<input type="text" ng-model="rightColCtrl.rpn" disabled="" class="rpn" /></td>
+		 			</tr>
 
- 			<table style="float: left; width: 45%;">
- 			<tr>
- 			<td> Infix expression:</td>
- 			<td> <input type="text" ng-model="rightColCtrl.infix" placeholder="enter infix expression"/> <input type="text" ng-model="rightColCtrl.rpn" disabled="" style="background-color: #fff; border: none;" /></td>
- 			</tr>
+		 			<!--<tr>
+		 			<td>Postfix expression:</td>
+		 			<td><input type="text" ng-model="rightColCtrl.rpn"/></td>
+		 			</tr>-->
 
- 		<!-- 	<tr>
- 			<td>Postfix expression:</td>
- 			<td><input type="text" ng-model="rightColCtrl.rpn"/></td>
- 			</tr>
- -->
- 			<tr>
- 			<td> </td>
- 			<td><button ng-click="rightColCtrl.convert2rpn(rightColCtrl.infix)">Compute</button></td>
- 			</tr>
+		 			<tr>
+		 			<td> </td>
+		 			<td><button ng-click="rightColCtrl.convert2rpn(rightColCtrl.infix)">Compute</button></td>
+		 			</tr>
 
- 			<tr>
- 			<td> </td>
- 			<td style="font-size: 20px; background-color: #f3b600; color:#fff; padding: 10px;">Result : {{ rightColCtrl.dataService.result }}	</td>
- 			</tr> 
- 			</table>
-			 
+		 			<tr>
  
-		 	
-
-			<!-- 
-			<input type="text" ng-model="rightColCtrl.result"/><br/>
-			-->
-
- 			
-			<!-- <button ng-click="rightColCtrl.calculate(rightColCtrl.rpn)">Calculate</button>
-
-			<button ng-click="rightColCtrl.clear()">Clear</button>
- -->
+		 			<td colspan="2" class="result">Result : {{ rightColCtrl.dataService.result }}	</td>
+		 			</tr> 
+	 			</table>
 			 
-			<!-- {{ rightColCtrl.result }} -->
-			<!-- {{ rightColCtrl.dataService.results }} -->
-
-
-			<table class="sample-table" style="float: right; width: 45%; text-align: left;">
-		 		<thead>
-		 		<tr>
-		 		<th> Infix Expression </th>
-		 		<th> Postfix Expression </th>
-		 		<th> Result </th>
-		 		</tr>
-
-		 		</thead>
-
-		 		<tr>
-		 			<td> 3 + 4 * 2 / ( 1 - 5 )</td>
-		 			<td> 3 4 2 * 1 5 - / + </td>
-		 			<td> 1   </td>
-	 			</tr>
-
-	 			<tr>
-		 			<td> 4 * 3 + 2 / 1</td>
-		 			<td> 4 3 * 2 1 / + </td>
-		 			<td> 14 </td>
-	 			</tr>
-
-	 			<tr>
-		 			<td> 4 + 18 / ( 9 - 3 )</td>
-		 			<td>4 18 9 3 - / +</td>
-		 			<td> 7</td>
-	 			</tr>
-
-	 			<tr>
-		 			<td> 4 * 3 + 2 - 1</td>
-		 			<td> 4 3 * 2 + 1 -</td>
-		 			<td> 13 </td>
-	 			</tr>
-
-	 			<tr>
-		 			<td> 2 * ( 3 + 4 ) - 6</td>
-		 			<td> 2 3 4 + * 6 -</td>
-		 			<td> 8  </td>
-	 			</tr>
-
- 			</table>
+ 			</div>
+		 	
+		 	<div class="box-2 fl">
+				<div sample-table></div>
+ 			</div>
 
 		</div>
 

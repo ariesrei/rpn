@@ -7,19 +7,18 @@
 		var vm = this;
 
 		function saveEntry(){
-			if(vm.title !== '' && vm.formula !== ''){
-				dataService.saveEntry(vm.title, vm.formula);
-				vm.title = '';
-				vm.formula = '';
+			if(vm.name !== '' && vm.value !== ''){
+				dataService.saveEntry(vm.name, vm.value);
+				vm.name = '';
+				vm.value = '';
 			}
 			else {
 				alert('Please fill the fields');
 			}
 		}
 
-		function clear(){
-			dataService.clear();
-		}
+
+		 
 
 		//this will process dataService compute 
 		function convert2rpn(){
@@ -31,12 +30,13 @@
 		}	
 
 		//this will process dataService compute 
-		function calculate(){
-			dataService.updateFormula(vm.rpn);
-			dataService.compute();
-		}	
+		// function calculate(){
+		// 	dataService.updateFormula(vm.rpn);
+		// 	dataService.compute();
+		// }	
 
-		vm.title = '';
+		// add new variables
+		vm.name = '';
 		vm.value = '';
 
 
@@ -49,22 +49,22 @@
 		vm.test = dataService.test;
 		//vm.expression = dataService.formula;
 		
-		// services
-		vm.dataService = dataService;
-
+		
 		//vm.formula = dataService.formula;
 		
 		
 		// functions
 		vm.saveEntry = saveEntry;
 		
-		vm.clear = clear;
+		 
 		vm.convert2rpn = convert2rpn;
-		vm.calculate = calculate;
+		//vm.calculate = calculate;
 
 
-		vm.result = dataService.compute;
-
+		//vm.result = dataService.compute;
+		
+		// services
+		vm.dataService = dataService;
 	}
 
 	function leftColController(dataService){
@@ -74,27 +74,7 @@
 		vm.dataService = dataService;
 	}
 
-  
-	// function controllerOne(saveCalculationRules) {
 
-	// 	var vm = this;
-	// 	vm.name = "Aries Meralles";
-
-
-	// 	// vm.push_rules = push_rules;
-
-	// 	// // vm.rules = "";
-
-	// 	// function push_rules(rules){
-
-	// 	// 	alert(rules);
-	// 	// 	//save_calculation_rules(rules);
-	// 	// }
-
-	// 	//vm.saveCalculationRules = saveCalculationRules;
-
-		
-	// }
 
 	rightColController.$inject = ['dataService'];
 	leftColController.$inject = ['dataService'];

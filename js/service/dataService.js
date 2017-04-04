@@ -7,6 +7,7 @@
 	function dataService(){
 	 	
 		var dataObj = {
+			entry: [],
 			stack: [], // stack for compute function
 			valid: true,
 			validOperators: ['*', 'x', '/', '-', '+'], // valid operators
@@ -26,10 +27,10 @@
 			updateFormula: updateFormula // function updateFormula
 		}
 
-		function saveEntry(title, formula){
-			entry.push({
-				title: title.toUpperCase(), 
-				formula: formula
+		function saveEntry(name, value){
+			this.entry.push({
+				name: name.toUpperCase(),
+				value: value
 			});
 			//alert(JSON.stringify(entry));
 		}

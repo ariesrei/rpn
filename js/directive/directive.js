@@ -48,7 +48,22 @@
 			}
 		};
 	}
-	 
+
+	function rpnAddEntry(){
+	 	return {
+	 		restrict: 'EA',
+	 		templateUrl: './templates/form_add_entry.html'
+		};
+	}
+	function sampleTable(){
+	 	return {
+	 		restrict: 'EA',
+	 		templateUrl: './templates/sample_table.html'
+		};
+	}
+	
+	module.directive("sampleTable", sampleTable);
+	module.directive("rpnAddEntry", rpnAddEntry);
 	module.directive("formulaDirective", formulaDirective);
 	module.directive("varNameDirective", varNameDirective);
 
