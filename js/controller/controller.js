@@ -8,7 +8,7 @@
 
 		function saveEntry(){
 			if(vm.name !== '' && vm.value !== ''){
-				dataService.saveEntry(vm.name, vm.value);
+				dataService.checkEntry(vm.name, vm.value);
 				vm.name = '';
 				vm.value = '';
 			}
@@ -21,7 +21,7 @@
 			dataService.calculate(vm.infix);
 			vm.rpn = dataService.rpn;
 			dataService.compute();
-		}	
+		}
 
 		vm.name = '';
 		vm.value = '';
