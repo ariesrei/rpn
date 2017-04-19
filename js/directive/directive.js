@@ -19,6 +19,7 @@
 				        else //Firefox
 				            e.preventDefault();
 				    }
+				    this.value = this.value.split(' ').join('');
 				    return true;
 				});
 			}
@@ -27,6 +28,9 @@
 
 	function nameDirective(){
 	 	return {
+ 		 	// scope: {
+	    //   		customerInfo: '=info'
+		   //  },
 	 		link: function(scope, element, attr){
 	 			element.css({
 					border: '1px #ddd solid'	
@@ -34,14 +38,17 @@
 				element.on('keydown', function(e){ 
 
 			     	var charCode = e.which || e.keyCode;
-			     	 
-			     	 
+			     	
 		     	  	if ((charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 123) && charCode != 32 && charCode != 8) {
       				 	if (window.event) //IE
 				            window.event.returnValue = false;
 				        else //Firefox
 				            e.preventDefault();
 				    }
+
+				    this.value = this.value.split(' ').join('_');
+					//this.value = this.value.toUpperCase();
+
 				    return true;
 
 				});

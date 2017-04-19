@@ -52,15 +52,14 @@
 				else {
 					this.saveEntry(name, value);
 				}
-
 			}
-			
 		}
 
 
 		function saveEntry(name, value){
 			this.entry.push({
-				name: name.toUpperCase(),
+				//name: name.toUpperCase(),
+				name: name,
 				value: value
 			});
 		}
@@ -113,7 +112,7 @@
 
 			if ( myParenthesisStack.has('(') ) {
 
-				alert("Found parenthesis!");
+				//alert("Found parenthesis!");
 
 				switch(str){
 				    case "*":
@@ -135,7 +134,7 @@
 				    case "(":
 			        	//alert("found (");
 			        	this.parenthesis_stack.push(str);
-			        	alert(this.parenthesis_stack);
+			        	//alert(this.parenthesis_stack);
 				        break;
 
 			        case ")": // CLOSING
@@ -144,7 +143,7 @@
 						this.parenthesis_stack.splice(idx, 1);
 			        	this.output.push(this.parenthesis_stack)
 			        	//this.parenthesis_stack.push(str);
-			        	alert("Parenthesis Stack :" + this.parenthesis_stack);
+			        	//alert("Parenthesis Stack :" + this.parenthesis_stack);
 				        break;
 
 				    default:
@@ -172,7 +171,7 @@
 				    case "(":
 			        	//alert("found (");
 			        	this.parenthesis_stack.push(str);
-			        	alert(this.parenthesis_stack);
+			        	//alert(this.parenthesis_stack);
 				        break;
 
 			     	case ")": // CLOSING
@@ -181,7 +180,7 @@
 						this.parenthesis_stack.splice(idx, 1);
 			        	this.output.push(this.parenthesis_stack)
 			        	//this.parenthesis_stack.push(str);
-			        	alert("Parenthesis Stack :" + this.parenthesis_stack);
+			        	//alert("Parenthesis Stack :" + this.parenthesis_stack);
 				        break;
 
 				    default:
@@ -196,14 +195,14 @@
 				var myOperatorStack = new Set(this.operator_stack);
 
 				this.operator_stack.push(str);
-				alert(this.operator_stack);
+				//alert(this.operator_stack);
 
 				if ( myOperatorStack.has('*') ) {
 					this.output.push('*');
 					var idx = this.operator_stack.indexOf("*");
 	  				this.operator_stack[idx] = "*";
 	  				this.operator_stack.splice(idx, 1);
-	  				alert(this.operator_stack);
+	  				//alert(this.operator_stack);
 	  			}
 
 	  			if ( myOperatorStack.has('/') ) {
@@ -211,7 +210,7 @@
 					var idx = this.operator_stack.indexOf("/");
 	  				this.operator_stack[idx] = "*";
 	  				this.operator_stack.splice(idx, 1);
-	  				alert(this.operator_stack);
+	  				//alert(this.operator_stack);
 	  			}
 
 	  			if ( myOperatorStack.has('+') ) {
@@ -219,7 +218,7 @@
 	  				this.operator_stack[idx] = "*";
 	  				this.operator_stack.splice(idx, 1);
 	  				this.operator_stack.push('+');
-	  				alert(this.operator_stack);
+	  				//alert(this.operator_stack);
 	  			}
 
 	  			if ( myOperatorStack.has('-') ) {
@@ -227,7 +226,7 @@
 	  				this.operator_stack[idx] = "*";
 	  				this.operator_stack.splice(idx, 1);
 	  				this.operator_stack.push('-');
-	  				alert(this.operator_stack);
+	  				//alert(this.operator_stack);
 	  			}
 
 			}
@@ -236,14 +235,14 @@
 				var myParenthesisStack = new Set(this.parenthesis_stack);
 				
 				this.parenthesis_stack.push(str);
-				alert(this.parenthesis_stack);
+				//alert(this.parenthesis_stack);
 
 				if ( myParenthesisStack.has('*') ) {
 					this.parenthesis_output.push('*');
 					var idx = this.parenthesis_stack.indexOf("*");
 	  				this.parenthesis_stack[idx] = "*";
 	  				this.parenthesis_stack.splice(idx, 1);
-	  				alert(this.parenthesis_stack);
+	  				//alert(this.parenthesis_stack);
 	  			}
 
 	  			if ( myParenthesisStack.has('/') ) {
@@ -251,7 +250,7 @@
 					var idx = this.parenthesis_stack.indexOf("/");
 	  				this.parenthesis_stack[idx] = "*";
 	  				this.parenthesis_stack.splice(idx, 1);
-	  				alert(this.parenthesis_stack);
+	  				//alert(this.parenthesis_stack);
 	  			}
 
 	  			if ( myParenthesisStack.has('+') ) {
@@ -259,7 +258,7 @@
 	  				this.parenthesis_stack[idx] = "*";
 	  				this.parenthesis_stack.splice(idx, 1);
 	  				this.parenthesis_stack.push('+');
-	  				alert(this.parenthesis_stack);
+	  				//alert(this.parenthesis_stack);
 	  			}
 
 	  			if ( myParenthesisStack.has('-') ) {
@@ -267,7 +266,7 @@
 	  				this.parenthesis_stack[idx] = "*";
 	  				this.parenthesis_stack.splice(idx, 1);
 	  				this.parenthesis_stack.push('-');
-	  				alert(this.parenthesis_stack);
+	  				//alert(this.parenthesis_stack);
 	  			}
 
 			}
@@ -282,34 +281,34 @@
 				var myOperatorStack = new Set(this.operator_stack);
 
 				this.operator_stack.push(str);
-				alert(this.operator_stack);
+				//alert(this.operator_stack);
 
 		    	if ( myOperatorStack.has('*') ) {
 					this.output.push('*');
 					var idx = this.operator_stack.indexOf("*");
 	  				this.operator_stack.splice(idx, 1);
-	  				alert(this.operator_stack);
+	  				//alert(this.operator_stack);
 	  			}
 
 	  			if ( myOperatorStack.has('/') ) {
 	  				this.output.push('/');
 					var idx = this.operator_stack.indexOf("/");
 	  				this.operator_stack.splice(idx, 1);
-	  				alert(this.operator_stack);
+	  				//alert(this.operator_stack);
 	  			}
 
 	  			if ( myOperatorStack.has('+') ) {
 	  				this.output.push('+');
 	  				var idx = this.operator_stack.indexOf("+");
 	  				this.operator_stack.splice(idx, 1);
-	  				alert(this.operator_stack);
+	  				//alert(this.operator_stack);
 	  			}
 
 	  			if ( myOperatorStack.has('-') ) {
 	  				this.output.push('-');
 					var idx = this.operator_stack.indexOf("-");
 	  				this.operator_stack.splice(idx, 1);
-	  				alert(this.operator_stack);
+	  				//alert(this.operator_stack);
 	  			}
 
 			}
@@ -318,34 +317,34 @@
 				var myParenthesisStack = new Set(this.parenthesis_stack);
 				
 				this.parenthesis_stack.push(str);
-				alert(this.parenthesis_stack);
+				//alert(this.parenthesis_stack);
 
 		    	if ( myParenthesisStack.has('*') ) {
 					this.parenthesis_output.push('*');
 					var idx = this.parenthesis_stack.indexOf("*");
 	  				this.parenthesis_stack.splice(idx, 1);
-	  				alert(this.parenthesis_stack);
+	  				//alert(this.parenthesis_stack);
 	  			}
 
 	  			if ( myParenthesisStack.has('/') ) {
 	  				this.parenthesis_output.push('/');
 					var idx = this.parenthesis_stack.indexOf("/");
 	  				this.parenthesis_stack.splice(idx, 1);
-	  				alert(this.parenthesis_stack);
+	  				//alert(this.parenthesis_stack);
 	  			}
 
 	  			if ( myParenthesisStack.has('+') ) {
 	  				this.parenthesis_output.push('+');
 	  				var idx = this.parenthesis_stack.indexOf("+");
 	  				this.parenthesis_stack.splice(idx, 1);
-	  				alert(this.parenthesis_stack);
+	  				//alert(this.parenthesis_stack);
 	  			}
 
 	  			if ( myParenthesisStack.has('-') ) {
 	  				this.parenthesis_output.push('-');
 					var idx = this.parenthesis_stack.indexOf("-");
 	  				this.parenthesis_stack.splice(idx, 1);
-	  				alert(this.parenthesis_stack);
+	  				//alert(this.parenthesis_stack);
 	  			}
 
 			}
@@ -356,78 +355,74 @@
 
 		function checkFormula(){
  
-			//console.log(this.output);
+			//console.log("RPN Expression: " + this.output.toString());
 
-			for (var i = 0; i < this.output.length; i++) { // 10 20 +
+			var t = this.output.toString();
+			var array = t.split(","); // array["A", "B", "+"]
 
-				if(!isNaN(this.output[i]) || this.output[i].toString() === "*" || this.output[i].toString() === "/" || this.output[i].toString() === "+" || this.output[i].toString() === "-" || this.output[i].toString() === "(" || this.output[i].toString() === ")" ){
-				
-					console.log(this.output[i] + " is good");
+			for (var i = 0; i < array.length; i++) { // 10 20 + 
 
-					// var to_string = this.output.toString();
-					// to_string = to_string.replace(/,/g, " ");
-					// this.updateFormula(to_string);
-
+				if(!isNaN(array[i]) || array[i] === "*" || array[i] === "/" || array[i] === "+" || array[i] === "-" || array[i] === "(" || array[i] === ")" ){
+					console.log("Step " + i + " : " + array[i] + " is good");
 				}
 				else {
-					console.log(this.output[i] + " is not a number!");
-					// var to_string = this.output.toString();
-					// to_string = to_string.replace(/,/g, " ");
-					// this.updateFormula(to_string);
-
-					console.log("Checking entry " + this.output[i].toString());
+					console.log( "Step " + i + " : Check and convert if " + array[i] + " is found.");
+					//console.log("Checking entry " + array[i]);
 
 					if (this.entry == "") {
-						console.log("Zero entry");
-						this.output[i] = null;
-						
+						//console.log("-------: " + array[i] + " is not found! Therefore " + array[i] + " is NaN or undefined EMPTY");
+						array[i] = NaN;					
 					}	
 
 					else {
-						console.log("Found an entry");
-						for (var x = 0; x < this.entry.length; x++ ){
 
-							if (  this.output[i] === this.entry[x].name) {
-								this.output[i] = this.entry[x].value;
+						for (var x = 0; x < this.entry.length; x++ ){ // 2
+
+
+							
+							if ( array[i] === this.entry[x].name || array[i] === this.entry[x].value) {
+
+								//console.log("-------: Found an entry of " + array[i] + " = " + this.entry[x].value);
+								array[i] = this.entry[x].value;
+
 				  			}
-
 				  			// else {
-				  			// 	alert("Undefined!."); 
-				  			// 	console.log("Not Found!");
+				  			// 	console.log("-------: " + array[i] + " is not found! Therefore " + array[i] + " is NaN or undefined xx");
+				  			// // 	//array[i] = NaN;
 				  			// }
+
 						}
 					}
 
 				}
-	
 
 			}
 
-			var to_string = this.output.toString();
-			to_string = to_string.replace(/,/g, " ");
+			var to_string = array.toString();
+			to_string = to_string.replace(/,/g, " "); // 4 3 * 2 + 1 -
 			this.updateFormula(to_string);
 		}
 
 		function updateFormula(string){
-			alert("Completing....");
 			dataObj.rpn = string;
 		}	
 
 		function compute(){
 
+			console.log("======================Computing===========================");
+			
 			this.stack = [];
-			var formula_split = this.rpn.split(" ");
-			var count = formula_split.length; // 100 50 + // count is : 3
+			this.rpn = this.rpn.split(" "); 
+			 
+			console.log(this.rpn); // array["4", "3", "*", "2" ......]
 
-			this.rpn = formula_split;
-
- 			for (var i = 0; i < count; i++) {
+ 			for (var i = 0; i < this.rpn.length; i++) {
 
 				var char =  this.rpn[i];
 
 		        if (!isNaN(char) && char != " ") {
 					this.stack.push(+char);
-					alert("Next number. The stack is now: " + this.stack);
+					//alert("Next number. The stack is now: " + this.stack);
 		        } 
 
 		        else if (char === " ") {
@@ -470,7 +465,7 @@
 		        }
       		}
 
-      		alert(this.stack);
+      		//alert(this.stack);
 
 			if (this.stack.length != 1 || isNaN(this.stack[0]) || this.stack == null) {
 				this.stack = [];
