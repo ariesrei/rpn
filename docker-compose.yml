@@ -1,0 +1,18 @@
+
+version: '3'
+services:
+
+  webapp:
+    build: .
+    image: ariesrei/rpn:latest
+    ports:
+     - "3000:3000"
+    volumes:
+     - .:/app
+    depends_on:
+      - testapp
+  
+  testapp:
+    image: ariesrei/rpn:latest
+    command: "npm test"
+
