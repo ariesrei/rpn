@@ -11,14 +11,17 @@ class appServices {
 
 		vm.dataObject = {
 			entry: [],
-
+			output: [],
+			parenthesis_stack: [],
+			operator_stack: [],
+			parenthesis_output: []
 			// stack: [], // stack for compute function
 			// valid: true,
 			// validOperators: ['*', 'x', '/', '-', '+'], // valid operators
-			// parenthesis_output: [],
+			
 			// parenthesis_stack: [],
 			// output: [],
-			// operator_stack: [],
+			
 			// infix: [], // infix expression
 			// rpn: [], // reverse polish notation
 			

@@ -4,105 +4,78 @@
 
 	<head>
 		<title>RPN - Angular</title>
+		<link rel="stylesheet" href="css/style.css">
 	 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 	</head>
 
 	<body>
 
-		<div class="container">
+		<div class="container" style="border: 1px #ddd solid;">
 			
 			<div class="row">
 
 				<div class="col-md-12" ng-controller="mainController as mainCtrl">
+							
+					<h1>Reverse Polish Notation</h1>
 					
 					<div class="col-md-6">
-
-					<br/>
-					<br/>
-					
+						<h3>Add Entry</h3>
+						<small>* Names are alphanumeric but should starts with a letter</small><br/>
+						<small>* Value should be numbers only and no space</small>
+						
 						<div add-entry></div>
-
-						{{ mainCtrl.entry }}
-
-			 			<!-- <table>
-
-							<tr ng-repeat="entry in rightColCtrl.dataService.entry" class="entry-row">
-								<td> {{ entry.name }}</td>
-								<td> {{ entry.value }}</td>
-							</tr>
-
-				 			<tr>
-					 			<td> Formula : </td>
-					 			<td> 
-					 				<input type="text" ng-model="rightColCtrl.infix" placeholder="enter infix expression"/> 
-					 				<input type="text" ng-model="rightColCtrl.rpn" disabled="" class="rpn" /></td>
-				 			</tr>
-
-				 			<tr>
-				 			<td> </td>
-				 			<td><button ng-click="rightColCtrl.convert2rpn(rightColCtrl.infix)">Compute</button></td>
-				 			</tr>
-
-				 			<tr>
-		 
-				 			<td colspan="2" class="result">Result : {{ rightColCtrl.dataService.result }}	</td>
-				 			</tr> 
-			 			</table> -->
-					 
+						<div entry-table></div>
+	 
 		 			</div>
 				 	
 				 	<div class="col-md-6">
-						<div sample-table></div>
+
+				 		<h2>Formula</h2>
+				 		<small>Formula should be space separated.</small><br/>
+				 		<small>Undefined name will return and error.</small>
+						<table>
+				 			<tr>
+					 			<td><input type="text" ng-model="mainCtrl.infix" placeholder="enter infix expression"/> </td>
+					 			<td><button ng-click="mainCtrl.convert2rpn(mainCtrl.infix)">Compute</button></td>
+				 			</tr>
+
+				 			<tr>
+				 				<td colspan="2"><input type="text" ng-model="rightColCtrl.rpn" disabled class="rpn" /></td>
+				 			</tr>	 
+			 			</table>
+
+
+			 			<div class="result">Result : {{ rightColCtrl.dataService.result }}</div>
+
+						
 		 			</div>
 
 				</div>
 
+				<div class="col-md-12" style="padding: 50px 0; border-top: 1px #ddd solid; margin-top: 20px;">
+	
+					<h3>Logs</h3>
 
+					<div ng-controller="mainController as mainCtrl">
+						Entry: {{ mainCtrl.entry }}	<br/>
+						Infix: {{ mainCtrl.infix }}	<br/>
+						Output: {{ mainCtrl.output }}	<br/>
 
-<!-- 
-				<div class="col-md-12" ng-controller="leftColController as leftColCtrl">
-		 			
-		 			<h3>Log</h3>
-		 			Entries: {{ leftColCtrl.dataService.entry }}	
-					<br/>
-					Infix Expression: {{ leftColCtrl.dataService.infix }}
-					<br/>
-					Output: {{ leftColCtrl.dataService.output }}	
-					<br/>
-					Operator Stack: {{ leftColCtrl.dataService.operator_stack }}	
-					<br/>
-					Parenthesis Output: {{ leftColCtrl.dataService.parenthesis_output }}	
-					<br/>
-					Parenthesis Stack: {{ leftColCtrl.dataService.parenthesis_stack }}	
-					<br/>
-				</div> -->
+						{{ mainCtrl.parenthesis_output }}
+					</div>
+	
+				</div>
 
 			</div>
 
 		</div>
 
-		<!-- <div ng-controller="firstController as firstCtrl">
-
-		<input type="text" ng-init="firstCtrl.rules='test'" ng-model="firstCtrl.rules"/>
-		<button ng-click="firstCtrl.pushRules(firstCtrl.rules)">Push</button>
-
-		 
-		 <br/>
-		 
-		</div>
-		 -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 		<script src="js/bundle.js"></script>
-<!-- 
-		<script src="js/myApp.js"/></script>
-		<script src="js/controller/controller.js"/></script>
-		<script src="js/factory/factory.js"/></script>
-		<script src="js/directive/directive.js"/></script>
-		<script src="js/service/dataService.js"/></script>
- -->
+
 	</body>
 
 </html>
