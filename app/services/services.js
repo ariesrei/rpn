@@ -14,8 +14,9 @@ class appServices {
 			output: [],
 			parenthesis_stack: [],
 			operator_stack: [],
-			parenthesis_output: []
-			// stack: [], // stack for compute function
+			parenthesis_output: [],
+			infix: [],
+			stack: [] // stack for compute function
 			// valid: true,
 			// validOperators: ['*', 'x', '/', '-', '+'], // valid operators
 			

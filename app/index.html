@@ -41,12 +41,12 @@
 				 			</tr>
 
 				 			<tr>
-				 				<td colspan="2"><input type="text" ng-model="rightColCtrl.rpn" disabled class="rpn" /></td>
+				 				<td colspan="2"><input type="text" ng-model="mainCtrl.rpn" disabled class="rpn" /></td>
 				 			</tr>	 
 			 			</table>
 
 
-			 			<div class="result">Result : {{ rightColCtrl.dataService.result }}</div>
+			 			<div class="result">Result : {{ mainCtrol.result }}</div>
 
 						
 		 			</div>
@@ -59,10 +59,14 @@
 
 					<div ng-controller="mainController as mainCtrl">
 						Entry: {{ mainCtrl.entry }}	<br/>
+
 						Infix: {{ mainCtrl.infix }}	<br/>
+
 						Output: {{ mainCtrl.output }}	<br/>
 
-						{{ mainCtrl.parenthesis_output }}
+						{{ mainCtrl.stack }} <br/>
+
+						{{ mainCtrl.operator_stack }}
 					</div>
 	
 				</div>

@@ -18,8 +18,13 @@ class mainController {
 		vm.parenthesis_stack = appService.parenthesis_stack;
 		vm.operator_stack = appService.operator_stack;
 		vm.parenthesis_output = appService.parenthesis_output;
-		vm.infix = '';
 
+		vm.infix = appService.infix;
+
+		vm.stack = appService.stack;
+
+		//vm.result =  '';
+		vm.inCount = 0;
 		// Functions
 		//vm.saveEntry = saveEntry;
 		// vm.convert2rpn = convert2rpn;
@@ -75,8 +80,12 @@ class mainController {
 
 		this.infix = value;
 
-		var infix_split = this.infix.split(" ");
+		var infix_split = value.split(" ");
 		var count = infix_split.length;
+		this.inCount = count;
+		//var count = value.split(" ").length; 
+
+		//alert(count);
 
 		for (var i = 0; i < count; i++) {
 
@@ -88,9 +97,11 @@ class mainController {
 			}
 		}
 
-		//this.output.push( this.operator_stack);
+		this.output.push(this.operator_stack);
 
-		//this.checkFormula();	
+		this.checkFormula();
+
+		this.compute();
 
 		//appService.calculate(vm.infix);
 		//vm.rpn = dataService.rpn;
@@ -102,7 +113,7 @@ class mainController {
 		var myParenthesisStack = new Set(this.parenthesis_stack);
 
 		if (myParenthesisStack.has('(')) {
-			switch (str) {
+			switch (value) {
 				case "*":
 					this.precedence_3('*', false);
 					break;
@@ -116,7 +127,7 @@ class mainController {
 					this.precedence_2('-', false);
 					break;
 				case "(":
-					this.parenthesis_stack.push(str);
+					this.parenthesis_stack.push(value);
 					break;
 				case ")":
 					var idx = this.parenthesis_stack.indexOf("(");
@@ -126,7 +137,7 @@ class mainController {
 				default:
 			}
 		} else {
-			switch (str) {
+			switch (value) {
 				case "*":
 					this.precedence_3('*', true);
 					break;
@@ -140,7 +151,7 @@ class mainController {
 					this.precedence_2('-', true);
 					break;
 				case "(":
-					this.parenthesis_stack.push(str);
+					this.parenthesis_stack.push(value);
 					break;
 				case ")":
 					var idx = this.parenthesis_stack.indexOf("(");
@@ -152,7 +163,7 @@ class mainController {
 		}
 	}
 
-	precedence_3(str = String, bool = Boolean) {
+	precedence_3(str, bool) {
 
 		if (bool) {
 
@@ -169,7 +180,6 @@ class mainController {
 				this.operator_stack.splice(idx, 1);
 				alert(this.operator_stack);
 			}
-
 			if (myOperatorStack.has('/')) {
 				this.output.push('/');
 				var idx = this.operator_stack.indexOf("/");
@@ -177,7 +187,6 @@ class mainController {
 				this.operator_stack.splice(idx, 1);
 				//alert(this.operator_stack);
 			}
-
 			if (myOperatorStack.has('+')) {
 				var idx = this.operator_stack.indexOf("+");
 				this.operator_stack[idx] = "*";
@@ -185,7 +194,6 @@ class mainController {
 				this.operator_stack.push('+');
 				//alert(this.operator_stack);
 			}
-
 			if (myOperatorStack.has('-')) {
 				var idx = this.operator_stack.indexOf("-");
 				this.operator_stack[idx] = "*";
@@ -234,13 +242,14 @@ class mainController {
 		return true;
 	}
 
-	precedence_2(str = String, bool = Boolean) {
+	precedence_2(str, bool) {
 
 		if (bool) {
+
 			var myOperatorStack = new Set(this.operator_stack);
 
 			this.operator_stack.push(str);
-			//alert(this.operator_stack);
+			alert(this.operator_stack);
 
 			if (myOperatorStack.has('*')) {
 				this.output.push('*');
@@ -351,6 +360,86 @@ class mainController {
 		this.updateFormula(to_string);
 	}
 
+	updateFormula(string, appService) {
+		this.rpn = string;
+
+		//this.compute();
+	}
+
+	compute(appService) {
+
+		alert("======================Computing===========================");
+
+		//this.stack = [];
+		var x = this.inCount;
+
+		//alert(x);
+
+		//this.rpn = this.rpn.split(" "); 
+
+		//console.log(this.rpn); // array["4", "3", "*", "2" ......]
+
+		for (var i = 0; i < x; i++) {
+
+			var char = this.rpn[i];
+
+			if (!isNaN(char) && char != " ") {
+				this.stack.push(+char);
+
+				alert("Next number. The stack is now: " + this.stack);
+			} else if (char === " ") {
+				continue;
+			} else {
+				var num1 = this.stack[this.stack.length - 2];
+				var num2 = this.stack[this.stack.length - 1];
+				var result = null;
+
+				this.stack.splice(this.stack.length - 1, 1);
+				this.stack.splice(this.stack.length - 1, 1);
+
+				switch (char) {
+					case "+":
+						result = num1 + num2;
+						console.log("Adding " + num1 + "+" + num2);
+						break;
+
+					case "-":
+						result = num1 - num2;
+						console.log("Subtracting " + num1 + "-" + num2);
+						break;
+
+					case "x":case "*":
+						result = num1 * num2;
+						console.log("Multiplying " + num1 + "*" + num2);
+						break;
+
+					case "/":
+						result = num1 / num2;
+						console.log("Dividing " + num1 + "/" + num2);
+						break;
+				}
+
+				this.stack.push(result);
+				console.log("Pushing the result of " + result + " on to the stack", this.stack);
+			}
+		}
+
+		//alert(this.stack);
+
+		if (this.stack.length != 1 || isNaN(this.stack[0]) || this.stack == null) {
+			this.stack = [];
+			this.stack.push("Invalid formula");
+			this.valid = false;
+		} else {
+			this.valid = true;
+		}
+
+		//this.result = String(this.stack);
+
+		alert(this.stack);
+		//this.clear();
+	}
+
 }
 
 mainController.$inject = ['appService'];
@@ -369,8 +458,9 @@ class appServices {
 			output: [],
 			parenthesis_stack: [],
 			operator_stack: [],
-			parenthesis_output: []
-			// stack: [], // stack for compute function
+			parenthesis_output: [],
+			infix: [],
+			stack: [] // stack for compute function
 			// valid: true,
 			// validOperators: ['*', 'x', '/', '-', '+'], // valid operators
 
