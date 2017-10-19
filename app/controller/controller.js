@@ -23,8 +23,11 @@ class mainController {
 
 		vm.stack = appService.stack;
 
-		//vm.result =  '';
+		vm.result =  '';
+		vm.str_rpn = '';
 		vm.inCount = 0;
+		vm.valid = true;
+
 		// Functions
 		//vm.saveEntry = saveEntry;
 		// vm.convert2rpn = convert2rpn;
@@ -50,9 +53,7 @@ class mainController {
 
 		if( name.match(regx_name) && value.match(regx_value) ) {
 			
-
     		if(this.entry != "") {
-
     			var x = 0,
 					count = this.entry.length;
 
@@ -63,23 +64,19 @@ class mainController {
 				if(this.entry[x].name == name){
 					alert("Name already exist!");
 				}
-
 				else {
 					this.entry.push({
 						name: name,
 						value: value
 					});
 				}
-
     		}
-
     		else {
     			this.entry.push({
 					name: name,
 					value: value
 				});
 			}
-
 		}
 		else {
 			alert("validation errors");
@@ -89,15 +86,9 @@ class mainController {
 
     convert2rpn(value, appService ) {
 
-    	
-		this.infix = value; 
-
 		var infix_split = value.split(" ");
 		var count = infix_split.length; 
 		this.inCount = count;
-		//var count = value.split(" ").length; 
-
-		//alert(count);
 
 		for(var i = 0; i < count; i++) {
 
@@ -105,22 +96,17 @@ class mainController {
 				this.checkPrecedence(infix_split[i]);
 			}
 			else {
-				// push numbers and name to postfix ["4", "3"]
 				this.output.push(infix_split[i]); 
 			}
 		}
 
-		this.output.push( this.operator_stack);
+		this.output.push(this.operator_stack);
 
+		//console.log(this.output);
 		this.checkFormula();	
+		//
 
 		this.compute();	
-
-		 
-		 
-    	//appService.calculate(vm.infix);
-		//vm.rpn = dataService.rpn;
-		//appService.compute();
     }
 
     checkPrecedence( value, appService ) {
@@ -188,14 +174,14 @@ class mainController {
 
 			this.operator_stack.push(str);
 
-			alert(this.operator_stack);
+			//alert(this.operator_stack);
 
 			if ( myOperatorStack.has('*') ) {
 				this.output.push('*');
 				var idx = this.operator_stack.indexOf("*");
   				this.operator_stack[idx] = "*";
   				this.operator_stack.splice(idx, 1);
-  				alert(this.operator_stack);
+  				//alert(this.operator_stack);
   			}
   			if ( myOperatorStack.has('/') ) {
   				this.output.push('/');
@@ -223,7 +209,7 @@ class mainController {
 		else {
 			var myParenthesisStack = new Set(this.parenthesis_stack);	
 			this.parenthesis_stack.push(str);
-			alert(this.parenthesis_stack);
+			//alert(this.parenthesis_stack);
 
 			if ( myParenthesisStack.has('*') ) {
 				this.parenthesis_output.push('*');
@@ -347,6 +333,9 @@ class mainController {
 		//console.log("RPN Expression: " + this.output.toString());
 
 		var t = this.output.toString();
+
+		console.log(t);
+
 		var array = t.split(","); // array["A", "B", "+"]
 
 		for (var i = 0; i < array.length; i++) { // 10 20 + 
@@ -364,56 +353,37 @@ class mainController {
 				}	
 
 				else {
-
 					for (var x = 0; x < this.entry.length; x++ ){ // 2
-
-
-						
 						if ( array[i] === this.entry[x].name || array[i] === this.entry[x].value) {
-
-							//console.log("-------: Found an entry of " + array[i] + " = " + this.entry[x].value);
 							array[i] = this.entry[x].value;
-
 			  			}
-			  			// else {
-			  			// 	console.log("-------: " + array[i] + " is not found! Therefore " + array[i] + " is NaN or undefined xx");
-			  			// // 	//array[i] = NaN;
-			  			// }
-
 					}
 				}
-
 			}
-
 		}
 
 		var to_string = array.toString();
 		to_string = to_string.replace(/,/g, " "); // 4 3 * 2 + 1 -
+
 		this.updateFormula(to_string);
 	}
 
 	updateFormula(string, appService) {
 		this.rpn = string;
-
-		//this.compute();
+		console.log("RPN : " + this.rpn)
 	}	
 
 	compute(appService) {
 
-		alert("======================Computing===========================");
-		
-		//this.stack = [];
+		console.log("======================Computing===========================");
+		this.rpn = this.rpn.split(" "); 
 		var x = this.inCount;
 
-		//alert(x);
-		
-		//this.rpn = this.rpn.split(" "); 
-		 
-		//console.log(this.rpn); // array["4", "3", "*", "2" ......]
-
-		for (var i = 0; i < x; i++) {
+		for (var i = 0; i < this.rpn.length; i++) {
 
 			var char =  this.rpn[i];
+
+			console.log("char: " + char);
 
 	        if (!isNaN(char) && char != " ") {
 				this.stack.push(+char);
@@ -426,7 +396,7 @@ class mainController {
 	        } 
 
 	        else {
-	          	var num1 = this.stack[this.stack.length - 2];
+      			var num1 = this.stack[this.stack.length - 2];
 	          	var num2 = this.stack[this.stack.length - 1];
 	          	var result = null;
 
@@ -438,17 +408,14 @@ class mainController {
 		              	result = num1 + num2;
 		              	console.log("Adding " + num1 + "+" + num2);
 		              	break;
-
 		            case "-":
 		              	result = num1 - num2;
 		              	console.log("Subtracting " + num1 + "-" + num2);
 		              	break;
-
 		            case "x": case "*":
 		              	result = num1 * num2;
 		              	console.log("Multiplying " + num1 + "*" + num2);
 		              	break;
-
 		            case "/":
 		              	result = num1 / num2;
 		              	console.log("Dividing " + num1 + "/" + num2);
@@ -457,13 +424,11 @@ class mainController {
 
 	          	this.stack.push(result);
 	          	console.log("Pushing the result of " + result + " on to the stack", this.stack);
-
 	        }
+
   		}
 
-  		//alert(this.stack);
-
-		if (this.stack.length != 1 || isNaN(this.stack[0]) || this.stack == null) {
+  		if (this.stack.length != 1 || isNaN(this.stack[0]) || this.stack == null) {
 			this.stack = [];
 			this.stack.push("Invalid formula");
 			this.valid = false;
@@ -472,17 +437,13 @@ class mainController {
 			this.valid = true;
 		}
 
-		//this.result = String(this.stack);
+		this.str_rpn = this.rpn.toString();
+		this.str_rpn = this.str_rpn.replace(/,/g, " ");
+  		this.result =  String(this.stack);
+  		
+  		console.log("Final Answer: " + this.result);
 
-		var xd = String(this.stack);
-
-
-		alert(this.stack);
-		//this.clear();
 	}
-
-
-
 }
 
 mainController.$inject = ['appService'];

@@ -41,12 +41,12 @@
 				 			</tr>
 
 				 			<tr>
-				 				<td colspan="2"><input type="text" ng-model="mainCtrl.rpn" disabled class="rpn" /></td>
+				 				<td colspan="2"><input type="text" ng-model="mainCtrl.str_rpn" disabled class="rpn" /></td>
 				 			</tr>	 
 			 			</table>
 
 
-			 			<div class="result">Result : {{ mainCtrol.result }}</div>
+			 			<div class="result">Result : {{ mainCtrl.result }}</div>
 
 						
 		 			</div>
@@ -64,11 +64,51 @@
 
 						Output: {{ mainCtrl.output }}	<br/>
 
-						{{ mainCtrl.stack }} <br/>
+						Stack: {{ mainCtrl.stack }} <br/>
 
-						{{ mainCtrl.operator_stack }}
+						Operator Stack: {{ mainCtrl.operator_stack }}
 					</div>
 	
+					<table class="sample-table">
+
+						<thead>
+							<tr>
+					 		<th> Infix Expression </th>
+					 		<th> Postfix </th>
+					 		<th> Result </th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr>
+								<td> 3 + 4 * 2 / ( 1 - 5 )</td>
+								<td> 3 4 2 * 1 5 - / + </td>
+								<td> 1   </td>
+							</tr>
+							<tr>
+								<td> 4 * 3 + 2 / 1</td>
+								<td> 4 3 * 2 1 / + </td>
+								<td> 14 </td>
+							</tr>
+							<tr>
+								<td> 4 + 18 / ( 9 - 3 )</td>
+								<td>4 18 9 3 - / +</td>
+								<td> 7</td>
+							</tr>
+							<tr>
+								<td> 4 * 3 + 2 - 1</td>
+								<td> 4 3 * 2 + 1 -</td>
+								<td> 13 </td>
+							</tr>
+							<tr>
+								<td> 2 * ( 3 + 4 ) - 6</td>
+								<td> 2 3 4 + * 6 -</td>
+								<td> 8  </td>
+							</tr>
+						</tbody>
+
+					</table>
+
 				</div>
 
 			</div>
