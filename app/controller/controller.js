@@ -101,11 +101,7 @@ class mainController {
 		}
 
 		this.output.push(this.operator_stack);
-
-		//console.log(this.output);
-		this.checkFormula();	
-		//
-
+		this.checkFormula();
 		this.compute();	
     }
 
@@ -218,7 +214,6 @@ class mainController {
   				this.parenthesis_stack.splice(idx, 1);
   				//alert(this.parenthesis_stack);
   			}
-
   			if ( myParenthesisStack.has('/') ) {
   				this.parenthesis_output.push('/');
 				var idx = this.parenthesis_stack.indexOf("/");
@@ -226,7 +221,6 @@ class mainController {
   				this.parenthesis_stack.splice(idx, 1);
   				//alert(this.parenthesis_stack);
   			}
-
   			if ( myParenthesisStack.has('+') ) {
   				var idx = this.parenthesis_stack.indexOf("+");
   				this.parenthesis_stack[idx] = "*";
@@ -234,7 +228,6 @@ class mainController {
   				this.parenthesis_stack.push('+');
   				//alert(this.parenthesis_stack);
   			}
-
   			if ( myParenthesisStack.has('-') ) {
 				var idx = this.operator_stack.indexOf("-");
   				this.parenthesis_stack[idx] = "*";
@@ -244,7 +237,6 @@ class mainController {
   			}
 
 		}
-
 		return true;
 	}
 
@@ -252,11 +244,8 @@ class mainController {
 	precedence_2(str, bool) {
 
 		if (bool) {
-
 			var myOperatorStack = new Set(this.operator_stack);
-
 			this.operator_stack.push(str);
-			alert(this.operator_stack);
 
 	    	if ( myOperatorStack.has('*') ) {
 				this.output.push('*');
@@ -264,21 +253,18 @@ class mainController {
   				this.operator_stack.splice(idx, 1);
   				//alert(this.operator_stack);
   			}
-
   			if ( myOperatorStack.has('/') ) {
   				this.output.push('/');
 				var idx = this.operator_stack.indexOf("/");
   				this.operator_stack.splice(idx, 1);
   				//alert(this.operator_stack);
   			}
-
   			if ( myOperatorStack.has('+') ) {
   				this.output.push('+');
   				var idx = this.operator_stack.indexOf("+");
   				this.operator_stack.splice(idx, 1);
   				//alert(this.operator_stack);
   			}
-
   			if ( myOperatorStack.has('-') ) {
   				this.output.push('-');
 				var idx = this.operator_stack.indexOf("-");
@@ -300,21 +286,18 @@ class mainController {
   				this.parenthesis_stack.splice(idx, 1);
   				//alert(this.parenthesis_stack);
   			}
-
   			if ( myParenthesisStack.has('/') ) {
   				this.parenthesis_output.push('/');
 				var idx = this.parenthesis_stack.indexOf("/");
   				this.parenthesis_stack.splice(idx, 1);
   				//alert(this.parenthesis_stack);
   			}
-
   			if ( myParenthesisStack.has('+') ) {
   				this.parenthesis_output.push('+');
   				var idx = this.parenthesis_stack.indexOf("+");
   				this.parenthesis_stack.splice(idx, 1);
   				//alert(this.parenthesis_stack);
   			}
-
   			if ( myParenthesisStack.has('-') ) {
   				this.parenthesis_output.push('-');
 				var idx = this.parenthesis_stack.indexOf("-");
@@ -330,10 +313,7 @@ class mainController {
 
 	checkFormula() {
  
-		//console.log("RPN Expression: " + this.output.toString());
-
 		var t = this.output.toString();
-
 		console.log(t);
 
 		var array = t.split(","); // array["A", "B", "+"]
@@ -388,7 +368,7 @@ class mainController {
 	        if (!isNaN(char) && char != " ") {
 				this.stack.push(+char);
 				
-				alert("Next number. The stack is now: " + this.stack);
+				//alert("Next number. The stack is now: " + this.stack);
 	        } 
 
 	        else if (char === " ") {
