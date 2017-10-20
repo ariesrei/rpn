@@ -6,37 +6,26 @@ class mainController {
 	constructor(appService) {
 
 		var vm = this;
-
+		//services
 		vm.appService = appService;
-
-		vm.name = '';
-		vm.value = '';
 		vm.rpn = appService.rpn;
 		vm.entry = appService.entry;
 		vm.output = appService.output;
-
 		vm.parenthesis_stack = appService.parenthesis_stack;
 		vm.operator_stack = appService.operator_stack;
 		vm.parenthesis_output = appService.parenthesis_output;
-
 		vm.infix = appService.infix;
-
 		vm.stack = appService.stack;
-
+		//variables
+		vm.name = '';
+		vm.value = '';
 		vm.result = '';
 		vm.str_rpn = '';
 		vm.inCount = 0;
 		vm.valid = true;
-
-		// Functions
-		//vm.saveEntry = saveEntry;
-		// vm.convert2rpn = convert2rpn;
-
-		// Service
 	}
 
 	saveEntry(name, value, appService) {
-
 		if (name !== '' && value !== '') {
 			this.validate(name, value);
 		} else {
@@ -158,10 +147,7 @@ class mainController {
 		if (bool) {
 
 			var myOperatorStack = new Set(this.operator_stack);
-
 			this.operator_stack.push(str);
-
-			//alert(this.operator_stack);
 
 			if (myOperatorStack.has('*')) {
 				this.output.push('*');
@@ -260,9 +246,7 @@ class mainController {
 			}
 		} else {
 			var myParenthesisStack = new Set(this.parenthesis_stack);
-
 			this.parenthesis_stack.push(str);
-			//alert(this.parenthesis_stack);
 
 			if (myParenthesisStack.has('*')) {
 				this.parenthesis_output.push('*');
@@ -289,7 +273,6 @@ class mainController {
 				//alert(this.parenthesis_stack);
 			}
 		}
-
 		return true;
 	}
 
@@ -395,6 +378,18 @@ class mainController {
 		this.result = String(this.stack);
 
 		console.log("Final Answer: " + this.result);
+
+		this.clear();
+	}
+
+	clear() {
+		this.entry = [];
+		this.infix = [];
+		this.output = [];
+		this.stack = [];
+		this.parenthesis_stack = [];
+		this.operator_stack = [];
+		this.parenthesis_output = [];
 	}
 }
 
@@ -416,24 +411,7 @@ class appServices {
 			operator_stack: [],
 			parenthesis_output: [],
 			infix: [],
-			stack: [] // stack for compute function
-			// valid: true,
-			// validOperators: ['*', 'x', '/', '-', '+'], // valid operators
-
-			// parenthesis_stack: [],
-			// output: [],
-
-			// infix: [], // infix expression
-			// rpn: [], // reverse polish notation
-
-			// checkFormula, checkFormula,
-			// clear: clear,
-			// checkPrecedence: checkPrecedence,
-			// precedence_3: precedence_3,
-			// precedence_2: precedence_2,
-			// calculate: calculate,
-			// compute: compute, // function compute
-			// updateFormula: updateFormula // function updateFormula
+			stack: []
 		};
 
 		return vm.dataObject;
