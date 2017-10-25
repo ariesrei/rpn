@@ -1,11 +1,13 @@
 
 // rollup.config.js
+import angular from 'rollup-plugin-angular';
+import typescript from 'rollup-plugin-typescript';
+
 import json from 'rollup-plugin-json';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import browsersync from 'rollup-plugin-browsersync';
-import inject from 'rollup-plugin-inject';
 
 export default {
   input: 'src/main.js',
@@ -14,11 +16,15 @@ export default {
     format: 'iife'
   },
   plugins: [
+    angular(),
+    typescript(),
   	json(),
   	babel({
   		exclude: 'node_modules/**',
+      plugins: ['external-helpers']
   	}),
   	commonjs({
+
       // non-CommonJS modules will be ignored, but you can also
       // specifically include/exclude files
       include: 'node_modules/**',  // Default: undefined
@@ -38,8 +44,13 @@ export default {
  
       // explicitly specify unresolvable named exports
       // (see below for more details)
-      namedExports: { './module.js': ['foo', 'bar' ] },  // Default: undefined
- 
+      namedExports: { 
+        // 'node_modules/jquery/dist/jquery.min.js': [ 'jquery' ],
+        'node_modules/angular/angular.min.js' : ['angular'],
+        'node_modules/angular-mocks/angular-mocks.js' : ['angular-mocks'],
+        // 'node_modules/bootstrap/dist/js/bootstrap.min.js' : ['bootstrap']
+      },  // Default: undefined
+  
       // sometimes you have to leave require statements
       // unconverted. Pass an array containing the IDs
       // or a `id => boolean` function. Only use this
@@ -53,16 +64,10 @@ export default {
   	}),
     browsersync({
       server: 'app',
-      browser: ["google chrome", "firefox"],
+      browser: ["firefox"],
       open: false,
       files: ["./*.js", "./app/css/*.css", "./src/*.js", "./app/*.html", "./lib/*.js"],
       ghostMode: false
-    }),
-    inject({      
-      include: '**/*.js',
-      exclude: 'node_modules/**',
-      jQuery: 'jquery',
-    }),
-    
+    })
   ],
 };

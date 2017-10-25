@@ -5,7 +5,9 @@
 	<head>
 		<title>RPN - Angular</title>
 		<link rel="stylesheet" href="css/style.css">
+
 	 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	 	<base href="/">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 	</head>
 
@@ -24,9 +26,12 @@
 						<small>* Names are alphanumeric but should starts with a letter</small><br/>
 						<small>* Value should be numbers only and no space</small>
 						
+						
 						<div add-entry></div>
+
 						<div entry-table></div>
-	 
+
+	 					<!-- <div directive-factory></div> -->
 		 			</div>
 				 	
 				 	<div class="col-md-6">
@@ -55,19 +60,7 @@
 
 				<div class="col-md-12" style="padding: 50px 0; border-top: 1px #ddd solid; margin-top: 20px;">
 	
-					<h3>Logs</h3>
-
-					<div ng-controller="mainController as mainCtrl">
-						Entry: {{ mainCtrl.entry }}	<br/>
-
-						Infix: {{ mainCtrl.infix }}	<br/>
-
-						Output: {{ mainCtrl.output }}	<br/>
-
-						Stack: {{ mainCtrl.stack }} <br/>
-
-						Operator Stack: {{ mainCtrl.operator_stack }}
-					</div>
+					
 	
 					<table class="sample-table">
 
@@ -109,15 +102,29 @@
 
 					</table>
 
+					<h3>Logs</h3>
+
+					<div ng-controller="mainController as mainCtrl">
+						Entry: {{ mainCtrl.entry }}	<br/>
+
+						Infix: {{ mainCtrl.infix }}	<br/>
+
+						Output: {{ mainCtrl.output }}	<br/>
+
+						Stack: {{ mainCtrl.stack }} <br/>
+
+						Operator Stack: {{ mainCtrl.operator_stack }}<br/>
+
+						Message: {{ mainCtrl.message }}
+					</div>
+
 				</div>
 
 			</div>
 
 		</div>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+ 
 		<script src="js/bundle.js"></script>
 
 	</body>

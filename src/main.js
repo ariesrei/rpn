@@ -5,19 +5,14 @@
 // Angular
 import MainController from '../app/controller/controller';
 import AppService from '../app/services/services';
-import AddEntry from '../app/directive/add-entry';
-import EntryTable from '../app/directive/entry-table';
-// import EntryValue from '../app/directive/entry-value';
+import Directive from '../app/directive/directive';
 
-angular
-    .module('myApp', [])
+angular.module('myApp', [])
     .controller('mainController', MainController)
     .service('appService', AppService)
-    .directive('addEntry', AddEntry)
-    .directive('entryTable', EntryTable);
-	// .directive('entryValue', EntryValue);
+    .directive('entryTable', Directive.entryTable)
+    .directive('addEntry', Directive.addEntry);
 
-
-module.exports = { MainController, AppService, AddEntry, EntryTable };
+module.exports = { MainController, AppService, Directive};
 
 

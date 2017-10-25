@@ -22,6 +22,8 @@ class mainController {
 		vm.inCount = 0;
 		vm.valid = true;
         
+        //for testing
+        vm.message = appService.message;
     }
 
     saveEntry(name, value, appService) {
@@ -68,6 +70,8 @@ class mainController {
 		else {
 			alert("validation errors");
 		}
+
+		return true;
 
 	}
 

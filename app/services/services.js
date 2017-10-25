@@ -4,7 +4,7 @@
 | 	Class Services
 |*********************/
 
-class appServices {
+class appService {
 	
 	constructor() {
 		var vm = this;
@@ -16,12 +16,11 @@ class appServices {
 			operator_stack: [],
 			parenthesis_output: [],
 			infix: [],
-			stack: []
+			stack: [],
+			message: 'Hello World'
 		}
-
 		return vm.dataObject;
 	}
-
 }
 
-export default appServices;
+export default appService;
